@@ -11,8 +11,23 @@ export default class Table extends Component {
   getHeader = () => {
     let header = Object.keys(this.state.data[0])
     return header.map((key, index) => {
+      if(key === "percentChange24h") {
+        return (<th className="Table-head" key={index}>
+          {key.toUpperCase()}
+          <button onClick={this.sortByPercentChange} className="Table-SortButton"><img src="up-arrow.png"/></button>
+        </th>)
+      }else{
        return <th className="Table-head" key={index}>{key.toUpperCase()}</th>
+       }
     })
+  }
+  sortByPercentChange = (el) => {
+      const sorted = this.state.data.sort((a,b) => {
+      return  +a.percentChange24h - +b.percentChange24h
+    });
+      this.setState({
+        data: sorted,
+      });
   }
     // Draw table body
   getTableData = (el) =>{
