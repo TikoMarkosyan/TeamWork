@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 export default class Table extends Component {
   constructor(props){
     super(props);
+    console.log(props);
     this.state={
       ...props
     }
@@ -22,11 +23,12 @@ export default class Table extends Component {
     })
   }
   sortByPercentChange = (el) => {
-      const sorted = this.state.data.sort((a,b) => {
+    const data = this.state.data;
+     data.sort((a,b) => {
       return  +a.percentChange24h - +b.percentChange24h
     });
       this.setState({
-        data: sorted,
+        data: data,
       });
   }
     // Draw table body
