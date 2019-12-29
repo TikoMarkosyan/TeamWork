@@ -9,69 +9,36 @@ const BASE_URL = 'https://api.udilia.com/coins/v1/';
 export default function App(){
   const [info,setInfo] = useState([]);
   const [pages,setPages] = useState(1);
+  const [totalPages,setTotalPages] = useState(0);
   const [showsPagesCount,setShowsPagesCount] = useState(20);
    useEffect(() => {
      fetches(pages,showsPagesCount);
    },[])
 
    const fetches = (pages,showsPagesCount) => {
-     console.log(pages)
      fetch(`${BASE_URL}cryptocurrencies?page=${pages}&perPage=${showsPagesCount}`)
      .then(data => data.json())
      .then(res => {
+          setTotalPages(res.totalPages);
           setInfo(res.currencies);
      })
    }
    const nextpage = number => {
       fetches(number,20)
    }
-   console.log(info)
   return(
-        <div>
+    <Context.Provider value={{
+          nextpage,
+      }}>
           <div>
-            <Header />
-            { info.length !== 0 ? <Table data={info}/> : <Lodding />}
-          </div>
-          <div>
-            <Context.Provider value={{
-                  nextpage,
-              }}>
-              <Pagination  />
-               </Context.Provider>
-          </div>
-       </div>
+            <div>
+              { info.length !== 0 ? <Header data={info} /> : null}
+              { info.length !== 0 ? <Table data={info}/> : <Lodding />}
+            </div>
+            <div>
+                <Pagination   totalpages={totalPages}/>
+            </div>
+         </div>
+    </Context.Provider>
   )
 }
-
-
-
-
-
-
-
-/*
-export default class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      info:null
-    }
-  }
-  componentDidMount(){
-    fetch(BASE_URL)
-    .then(data => data.json())
-    .then(res => {
-      this.setState({
-        info: res.currencies,
-      });
-    })
-  }
-  render(){
-    return(
-      <div>
-        <Header />
-      { this.state.info != null ? <Table data={this.state.info}/> : <Lodding />}
-      </div>
-    )
-  }
-}*/

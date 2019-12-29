@@ -7,11 +7,25 @@
   border-collapse: collapse;
   border-spacing: 0;
 }
-
 .Table-head {
   background-color: #0c2033;
 }
-
+.Red{
+  color:red !important;
+}
+.Green{
+  color:green !important;
+}
+.center{
+  text-align: center;
+}
+.Button{
+  font-family: 'Open Sans', sans-serif;
+  color: #fff;
+  background-color: #0c2033;
+  border: 0px;
+  font-size: 30px;
+}
 .Table-head tr th {
   padding: 10px 20px;
   color: #9cb3c9;
