@@ -1,12 +1,9 @@
-import React, {useState,useEffect,useContext,useRef,memo} from 'react';
+import React, { useState, useEffect, useContext, useRef, memo } from 'react';
 
 export default function Popups(props) {
+
   const [data,setData] = useState(props.data);
   const [open,setOpen] = useState(props.openPopus);
-  useEffect(() => {
-        setOpen(props.openPopus)
-        setData(props.data);
-  }, [props.openPopus,props.data])
   const divStyle = open ? {
       visibility:'visible',
       opacity: '1'
@@ -14,7 +11,11 @@ export default function Popups(props) {
       visibility:'hidden',
       opacity: '0'
     }
-    console.log(data)
+  useEffect(() => {
+        setOpen(props.openPopus)
+        setData(props.data);
+  }, [props.openPopus,props.data])
+
   return (
       <div className="overlay" style={divStyle}>
           <div className="popup">
@@ -30,4 +31,5 @@ export default function Popups(props) {
           </div>
     </div>
   )
+  
 }

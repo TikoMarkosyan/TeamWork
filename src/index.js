@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './all_css/index.css';
-import './all_css/Table.css';
-import './all_css/Loading.css';
-import './all_css/Popup.css';
+import './components/body-components/table/Table.css';
+import './components/body-components/loadding/Lodding';
+import './components/headercomponent/popups/Popup.css';
+import './components/headercomponent/header/Header.css'
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 

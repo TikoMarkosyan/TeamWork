@@ -1,21 +1,23 @@
-import React, {useState,useEffect,useContext,useRef,memo} from 'react';
-import  Changeitem from './Changeitem';
-import {Context} from './context'
+import React, { useState, useEffect, useContext, useRef, memo } from 'react';
+import  Changeitem from './helper/Changeitem';
+import {Context} from '../../utility/context'
 export default function Table(props) {
+  
     const [data,setData] =  useState(props.data);
     const [openOrClose,setopenOrClose] = useState(false);
     const [needToChange,setNeedToChange] = useState(null);
-    useEffect(() => {
-          setData(props.data)
-    }, [props.data])
-  const getHeader = () => {
-      let header = Object.keys(data[0]);
-      return header.map((key, index) => {
-         return <th className="Table-head" onClick={()=>{sortByPercentChange(key)}} key={index}>{key.toUpperCase()}</th>
-      })
-    }
+
+    const getHeader = () => {
+
+        let header = Object.keys(data[0]);
+        return header.map((key, index) => {
+           return <th className="Table-head" onClick={()=>{sortByPercentChange(key)}} key={index}>{key.toUpperCase()}</th>
+        })
+
+      }
 
   const sortByPercentChange = (field) => {
+
     let sortedData = data.slice().sort((a, b) => {
           if(field === "name" || field === 'id'){
             if(a[field] < b[field]) {
@@ -29,8 +31,8 @@ export default function Table(props) {
             return 0;
           }
       });
-      console.log(sortedData)
         setData(sortedData);
+
     }
     const getTableData = (el) =>{
         const res = [];
@@ -41,12 +43,16 @@ export default function Table(props) {
                 })
         return res;
       }
+
     const chengitem = (el) => {
-      console.log(el)
+
       setopenOrClose(true)
       setNeedToChange(el);
+
     }
+
     const changedata = (item) => {
+
     const result = data.map(el => {
         if(el.id === item.id){
           return item;
@@ -54,29 +60,33 @@ export default function Table(props) {
         return el;
       })
         setData(result);
+
     }
-      return(
+
+    useEffect(() => {
+          setData(props.data)
+    }, [props.data])
+    return(
         <Context.Provider value={{
               changedata,
           }}>
-        <div className="Table-container">
-          <table className="Table">
-            {
-              <tbody className="Table-body">
-                { getHeader() }
-                {
-                  data.map(el => {
-                    return ( <tr key={el.id} onClick={()=> {chengitem(el)}}>
-                      {getTableData(el)}
-                    </tr> )
-                  })
-                }
-
-              </tbody>
-            }
-          </table>
-          {openOrClose ? <Changeitem item={needToChange} openPopus={openOrClose}/> : null }
-      </div>
+              <div className="Table-container">
+                  <table className="Table">
+                    {
+                      <tbody className="Table-body">
+                        { getHeader() }
+                        {
+                          data.map(el => {
+                            return ( <tr key={el.id} onClick={()=> {chengitem(el)}}>
+                              {getTableData(el)}
+                            </tr> )
+                          })
+                        }
+                        </tbody>
+                      }
+                  </table>
+                  {openOrClose ? <Changeitem item={needToChange} openPopus={openOrClose}/> : null }
+              </div>
         </Context.Provider>
-      )
+    )
 }

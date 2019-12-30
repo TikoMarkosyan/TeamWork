@@ -1,11 +1,13 @@
-import React, {useState,useEffect,useContext} from 'react';
-import {Context} from './context';
+import React, {useState, useEffect, useContext} from 'react';
+import {Context} from '../../../utility/context';
 export default function Pagination (props){
+
   const page = props.totalpages;
   const [count,setCount] = useState(1);
   const [leftdisabled,setLeftDisabled] = useState(true);
   const [rightdisabled,setRightDisabled] = useState(false);
   const {nextpage} = useContext(Context);
+
   const counted = (nextOrPrev) => {
   let number = nextOrPrev === "next" ? count + 1 : count - 1
       setLeftDisabled(false);
@@ -22,6 +24,7 @@ export default function Pagination (props){
     setCount(number);
     nextpage(number);
   }
+  
   return (
     <div className="center">
       <button class="Button" disabled={leftdisabled} onClick={() => { counted("prev") }}>&larr;</button>
